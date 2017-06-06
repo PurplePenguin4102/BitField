@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BitField
+namespace Utility
 {
     public class BitField
     {
@@ -23,6 +20,8 @@ namespace BitField
             }
         }
 
+        public int NumFlags { get => _flags.Count; }
+
         private bool CheckRange(int key)
         {
             if (key >= _flags.Count)
@@ -33,26 +32,26 @@ namespace BitField
         public BitField(int flags)
         {
             _flags = new List<bool>(32);
-            PopulateFlags(flags);
+            PopulateFlags(flags, 32);
         }
 
         public BitField(short flags)
         {
             _flags = new List<bool>(16);
-            PopulateFlags(flags);
+            PopulateFlags(flags, 16);
         }
 
         public BitField(byte flags)
         {
             _flags = new List<bool>(8);
-            PopulateFlags(flags);
+            PopulateFlags(flags, 8);
         }
 
-        private void PopulateFlags(int flags)
+        private void PopulateFlags(int flags, int len)
         {
-            for (int i = 0; i < _flags.Count; i++)
+            for (int i = 0; i < len; i++)
             {
-                _flags[i] = (flags & (1 << i)) > 0;
+                _flags.Add((flags & (1 << i)) > 0);
             }
         }
     }
